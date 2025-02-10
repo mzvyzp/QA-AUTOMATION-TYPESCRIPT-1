@@ -10,8 +10,11 @@ const cat = {
     get description() {
         return this.name + ' — ' + this.characteristics.breed +' cat with ' + this.characteristics.color + ' color of fur. Weight is ' + this.characteristics.weight + ' kg';
     },
+    get weight() {
+        return this.characteristics.weight;
+    },
 
-    set updateWeight(newWeight) {
+    set weight(newWeight) {
         if (newWeight > 0) {
             this.characteristics.weight = newWeight;
             console.log(`Weight is updated: ${this.characteristics.weight} kg`);
@@ -22,5 +25,5 @@ const cat = {
 };
 
 console.log(cat.description);
-cat.updateWeight = 7.2;
+cat.weight = 7.2;
 console.log(cat.description);
