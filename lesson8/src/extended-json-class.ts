@@ -1,7 +1,7 @@
-import { getJson } from './interface-json';
+//import { getJson } from './interface-json';
 import { User } from './interface-json';
 
-class UserSummary {
+export class UserSummary {
     private id: number;
     public name: string;
     public city: string;
@@ -14,9 +14,3 @@ class UserSummary {
         this.companyName = user.company.name;
     }
 }
-
-(async () => {
-    const users = await getJson();
-    const userSummary = new UserSummary(users[2]);
-    console.log('User Summary:', userSummary);
-})();

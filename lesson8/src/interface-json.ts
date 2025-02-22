@@ -34,8 +34,3 @@ export async function getJson(): Promise<User[]> {
     return json;
 }
 
-(async () => {
-    const users = await getJson();
-    console.log('user name:', users[2].name);
-    console.log('company name:', users[2].company.name);
-})();

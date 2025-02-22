@@ -1,43 +1,9 @@
-class Animal {
-    public name: string;
-    public age: number;
-
-    public constructor(name: string, age: number) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public getInfo(): string {
-        return `Name: ${this.name}, Age: ${this.age}`;
-    }
-}
-
-class Dog extends Animal {
-    public breed: string;
-
-    public constructor(name: string, age: number, breed: string) {
-        super(name, age);
-        this.breed = breed;
-    }
-
-    public getInfo(): string {
-        return `${super.getInfo()}, Breed: ${this.breed}`;
-    }
-}
-
-class Cat extends Animal {
-    public color: string;
-    public static defaultCat = new Cat('Street cat', 4, 'Gray');
-
-    public constructor(name: string, age: number, color: string) {
-        super(name, age);
-        this.color = color;
-    }
-
-    public getInfo(): string {
-        return `${super.getInfo()}, Color: ${this.color}`;
-    }
-}
+import { DetailedUser } from './abstraction';
+import { User, getJson } from './interface-json';
+import { UserSummary } from './extended-json-class';
+import { Animal } from './animals';
+import { Dog } from './dogs-class';
+import { Cat } from './cats-class';
 
 const animal = new Animal('Fox', 5);
 const dog = new Dog('Glory', 3, 'Rottweiler');
@@ -54,3 +20,28 @@ console.log(`New age of dog: ${dog.age}`);
 
 cat.age = 13;
 console.log(`New age of cat: ${cat.age}`);
+
+async function main(): Promise<void> {
+    const users: User[] = await getJson();
+    users.forEach(user => {
+        const detailedUser = new DetailedUser(user);
+        console.log('import from abstraction:');
+        console.log('Detailed User Summary:', detailedUser.getSummary());
+    });
+}
+
+main();
+
+(async () => {
+    const users = await getJson();
+    const userSummary = new UserSummary(users[2]);
+    console.log('import from extended-json-class:');
+    console.log('User Summary:', userSummary);
+})();
+
+(async () => {
+    const users = await getJson();
+    console.log('import from interface-json:');
+    console.log('user name:', users[2].name);
+    console.log('company name:', users[2].company.name);
+})();
