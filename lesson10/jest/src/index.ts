@@ -3,7 +3,7 @@ import { DieselEngine } from './diesel-engine';
 import { GasEngine } from './gas-engine';
 import { IEngine } from './iengine';
 import { ElectricEngine } from './electric-engine';
-function reachTopRevs(engine: IEngine): void {
+export function reachTopRevs(engine: IEngine): void {
     engine.reachTopRevs(7000);
 }
 const dieselEngine =  new DieselEngine(2000, 150, 350, 17, 'Diesel');
