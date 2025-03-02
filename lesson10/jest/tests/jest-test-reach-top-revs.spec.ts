@@ -1,6 +1,5 @@
-
 import { expect } from '@jest/globals';
-import { ElectricEngine } from 'src/electric-engine';
+import { ElectricEngine } from '../src/electric-engine';
 describe('reachTopRevs', () => {
 
     it('should call reachTopRevs with 7000', () => {

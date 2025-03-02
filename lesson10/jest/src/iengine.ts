@@ -4,5 +4,5 @@ export interface IEngine {
 
     start(): void;
     stop(): void;
-    reachTopRevs(revs: number): void;
+    reachTopRevs(revs: number): string;
 }

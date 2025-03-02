@@ -32,7 +32,7 @@ export class ElectricEngine implements IEngine {
     public stop(): void {
         console.log('Electric engine stopped');
     }
-    public reachTopRevs(revs: number): void {
-        console.log(`Reaching top revs of ${revs}, but battery is running out`);
+    public reachTopRevs(revs: number): string {
+        return `Reaching top revs of ${revs}, but battery is running out`;
     }
 }

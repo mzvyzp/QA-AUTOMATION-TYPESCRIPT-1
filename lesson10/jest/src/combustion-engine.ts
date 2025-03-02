@@ -37,7 +37,7 @@ export class CombustionEngine implements IEngine {
     public stop(): void {
         console.log('Combustion engine stopped');
     }
-    public reachTopRevs(revs: number): void {
-        console.log(`Reaching top revs of ${revs}`);
+    public reachTopRevs(revs: number): string {
+        return `Reaching top revs of ${revs}`;
     }
 }
