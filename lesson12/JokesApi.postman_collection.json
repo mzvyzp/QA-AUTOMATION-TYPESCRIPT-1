@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "68fc92df-9330-4351-b5f1-8ee0ce230c9d",
+		"name": "JokesApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42933606"
+	},
+	"item": [
+		{
+			"name": "getTypes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{JokesApiBaseUrl}}/types/",
+					"host": [
+						"{{JokesApiBaseUrl}}"
+					],
+					"path": [
+						"types",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getJokesByTypeRandom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('joke has the same type', function () {",
+							"    const joke = pm.response.json()[0];",
+							"    pm.expect(joke).to.have.property('type').eql(pm.collectionVariables.get(\"JokesType\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{JokesApiBaseUrl}}/jokes/{{JokesType}}/random",
+					"host": [
+						"{{JokesApiBaseUrl}}"
+					],
+					"path": [
+						"jokes",
+						"{{JokesType}}",
+						"random"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getByTypeTen",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"10 jokes in responce\", function () {",
+							"    pm.expect(pm.response.json()).to.be.an('array');",
+							"    pm.expect(pm.response.json()).to.have.length(10);",
+							"});",
+							"",
+							"pm.response.json().forEach((joke) => {",
+							"    pm.test(`Joke with id ${joke.id} has required properties`, function () {",
+							"        pm.expect(joke).to.have.property('type');",
+							"        pm.expect(joke).to.have.property('setup');",
+							"        pm.expect(joke).to.have.property('punchline');",
+							"    });",
+							"});",
+							"",
+							"pm.test('joke has the same type', function () {",
+							"     const responseData = pm.response.json();",
+							"     responseData.forEach((joke) => {",
+							"            pm.expect(joke).to.have.property('type').eql(pm.collectionVariables.get(\"JokesType\"));",
+							"     });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{JokesApiBaseUrl}}/jokes/{{JokesType}}/ten",
+					"host": [
+						"{{JokesApiBaseUrl}}"
+					],
+					"path": [
+						"jokes",
+						"{{JokesType}}",
+						"ten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getJokesById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Status code is ok\", function () {",
+							"    pm.response.to.have.status(200, 201, 202);",
+							"});",
+							"",
+							"pm.test(\"Response body has type, setup, punchline, and id\", function () {",
+							"    pm.response.to.have.jsonBody(\"type\");",
+							"    pm.response.to.have.jsonBody(\"setup\");",
+							"    pm.response.to.have.jsonBody(\"punchline\");",
+							"    pm.response.to.have.jsonBody(\"id\");",
+							"});",
+							"",
+							"pm.test('joke id is equal to {{JokesId}}', function () {",
+							"    const joke = pm.response.json();",
+							"    pm.expect(joke).to.have.property('id').eql(Number(pm.collectionVariables.get(\"JokesId\")));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{JokesApiBaseUrl}}/jokes/{{JokesId}}",
+					"host": [
+						"{{JokesApiBaseUrl}}"
+					],
+					"path": [
+						"jokes",
+						"{{JokesId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "JokesApiBaseUrl",
+			"value": "http://localhost:3005/",
+			"type": "string"
+		},
+		{
+			"key": "JokesType",
+			"value": "knock-knock",
+			"type": "string"
+		},
+		{
+			"key": "JokesId",
+			"value": "11",
+			"type": "string"
+		}
+	]
+}
