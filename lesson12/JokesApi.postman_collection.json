@@ -204,7 +204,7 @@
 	"variable": [
 		{
 			"key": "JokesApiBaseUrl",
-			"value": "http://localhost:3005/",
+			"value": "http://localhost:3005",
 			"type": "string"
 		},
 		{
