@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "3b94d4f3-48e6-45cd-a794-f9b6fa4d99ef",
+		"name": "TheCatsAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42933606"
+	},
+	"item": [
+		{
+			"name": "/images/upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"URL in the response body should not be null\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.url).to.not.be.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{theCatsApiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/private/var/folders/zr/wzd_w9jj6c3g35v3rnrm8fv40000gn/T/com.apple.Photos.NSItemProvider/uuid=530CDBB3-806F-4631-ABB7-AC8B39042ABC&code=001&library=1&type=1&mode=2&loc=true&cap=true.jpeg/IMG_4514.jpeg"
+						},
+						{
+							"key": "sub_id",
+							"value": "ValiriaViCoonya1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{theCatsApiBaseUrl}}/images/upload",
+					"host": [
+						"{{theCatsApiBaseUrl}}"
+					],
+					"path": [
+						"images",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/imagesById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response is ok\", function () {\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the 'id' property in the response body\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.eql(pm.variables.get(\"theCatPicId\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{theCatsApiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{theCatsApiBaseUrl}}/images/{{theCatPicId}}",
+					"host": [
+						"{{theCatsApiBaseUrl}}"
+					],
+					"path": [
+						"images",
+						"{{theCatPicId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favourites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{theCatsApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"image_id\":\"hf-BvvVSm\",\n    \"sub_id\":\"ValiriaViCoonya1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{theCatsApiBaseUrl}}/favourites",
+					"host": [
+						"{{theCatsApiBaseUrl}}"
+					],
+					"path": [
+						"favourites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFavourites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check for image_id, image subproperies\", () => {",
+							"    pm.response.json().forEach((cat) => {",
+							"        if (cat.image_id === pm.variables.get(\"theCatPicId\")) {",
+							"            pm.expect(cat.sub_id).to.equal(\"ValiriaViCoonya1\");",
+							"            pm.expect(cat.image.id).to.equal(pm.variables.get(\"theCatPicId\"));",
+							"            pm.expect(cat.image.url).to.equal(`https://cdn2.thecatapi.com/images/${pm.variables.get(\"theCatPicId\")}.jpg`);",
+							"        }",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{theCatsApiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{theCatsApiBaseUrl}}/favourites",
+					"host": [
+						"{{theCatsApiBaseUrl}}"
+					],
+					"path": [
+						"favourites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postVotes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{theCatsApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"image_id\": \"hf-BvvVSm\",\n    \"sub_id\": \"ValiriaViCoonya1\",\n    \"value\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{theCatsApiBaseUrl}}/votes",
+					"host": [
+						"{{theCatsApiBaseUrl}}"
+					],
+					"path": [
+						"votes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getVotes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check for image_id, votes number, and image subproperty id\", () => {",
+							"    pm.response.json().forEach((cat) => {",
+							"        if (cat.image_id === pm.variables.get(\"theCatPicId\")) {",
+							"            pm.expect(cat.value).to.equal(3);",
+							"            pm.expect(cat.sub_id).to.equal(\"ValiriaViCoonya1\");",
+							"            pm.expect(cat.image.id).to.equal(pm.variables.get(\"theCatPicId\"));",
+							"            pm.expect(cat.image.url).to.equal(`https://cdn2.thecatapi.com/images/${pm.variables.get(\"theCatPicId\")}.jpg`);",
+							"        }",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{theCatsApiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{theCatsApiBaseUrl}}/votes",
+					"host": [
+						"{{theCatsApiBaseUrl}}"
+					],
+					"path": [
+						"votes"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "theCatsApiBaseUrl",
+			"value": "https://api.thecatapi.com/v1",
+			"type": "string"
+		},
+		{
+			"key": "theCatsApiKey",
+			"value": "live_QDxuctIXG6s8EuqfwSDmGUrc4jRB0CgirWSPVhiIIOFpd2esZ32S3kSk1NO338T8",
+			"type": "string"
+		},
+		{
+			"key": "theCatPicId",
+			"value": "41xv9-YC2",
+			"type": "string"
+		},
+		{
+			"key": "theCatBreed",
+			"value": "abob",
+			"type": "string"
+		},
+		{
+			"key": "theCatSubId",
+			"value": "ValiriaViCoonya1",
+			"type": "string"
+		}
+	]
+}
