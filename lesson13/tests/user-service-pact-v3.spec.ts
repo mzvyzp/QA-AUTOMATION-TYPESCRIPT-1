@@ -25,6 +25,11 @@ describe('PactV3 PetsStore consumer tests', () => {
     };
 
     const EXPECTED_BODY = like(userExample);
+    const POST_RESPONSE_BODY = like({
+        code: 200,
+        type: 'unknown',
+        message: '3'
+    });
 
     describe('create and get user', () => {
         it('returns created user', () => {
@@ -43,7 +48,7 @@ describe('PactV3 PetsStore consumer tests', () => {
                 .willRespondWith({
                     status: 200,
                     headers: { 'content-type': 'application/json' },
-                    body: EXPECTED_BODY
+                    body: POST_RESPONSE_BODY
                 })
                 .uponReceiving('get user')
                 .withRequest({
@@ -63,7 +68,7 @@ describe('PactV3 PetsStore consumer tests', () => {
                 const response = await userService.getUser('test3');
 
                 // Assert
-                expect(responsePost.data).to.deep.eq(userExample);
+                expect(responsePost.data).to.include.keys('code', 'type', 'message');
                 expect(response.data).to.deep.eq(userExample);
             });
         });
