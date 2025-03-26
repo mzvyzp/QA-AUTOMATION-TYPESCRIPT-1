@@ -1,0 +1,71 @@
+{
+  "consumer": {
+    "name": "favourites-consumer-v3"
+  },
+  "interactions": [
+    {
+      "description": "A request to get favorite image",
+      "providerStates": [
+        {
+          "name": "Favorite image exists"
+        }
+      ],
+      "request": {
+        "headers": {
+          "accept": "application/json",
+          "x-api-key": "live_QDxuctIXG6s8EuqfwSDmGUrc4jRB0CgirWSPVhiIIOFpd2esZ32S3kSk1NO338T8"
+        },
+        "method": "GET",
+        "path": "/favourites"
+      },
+      "response": {
+        "body": [
+          {
+              "id": 232519508,
+              "user_id": "sbnqf9",
+              "image_id": "41xv9-YC2",
+              "sub_id": "ValiriaViCoonya",
+              "created_at": "2025-03-09T22:04:45.000Z",
+              "image": {
+                  "id": "41xv9-YC2",
+                  "url": "https://cdn2.thecatapi.com/images/41xv9-YC2.jpg"
+              }
+          }
+      ],
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {},
+          "status": {}
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "14.0.0"
+    },
+    "pactRust": {
+      "ffi": "0.4.22",
+      "models": "1.2.3"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "favourites-provider-v3"
+  }
+}
