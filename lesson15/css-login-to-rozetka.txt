@@ -1,0 +1,5 @@
+1. Press ul.header-actions li:nth-child(4) button.header__button. Expected: window "Вхід" appears.
+2. press button [data-testid="modal-content"] rz-evo-auth rz-link-button:nth-child(4) button. Expected: Window "Вхід" is opened.
+3. fill email of user in #email. 
+4. Fill password in #password
+5. Press rz-submit-button button Expected: window "Вхід" is closed. Main menu appears, user is logged in.

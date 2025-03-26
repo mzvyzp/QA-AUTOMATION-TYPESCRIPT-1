@@ -1,0 +1,5 @@
+1. Press ul.header-actions //ul/li[4]/* //button. Expected: window "Вхід" appears.
+2. press button //div[@data-testid="modal-content"] /rz-evo-auth/*[4] //button. Expected: Window "Вхід" is opened.
+3. fill email of user in //input[@id="email"]. 
+4. Fill password in //input[@id="password"]
+5. Press //button[@type="submit"] Expected: window "Вхід" is closed. Main menu appears, user is logged in.
