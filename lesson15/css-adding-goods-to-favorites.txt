@@ -1,0 +1,11 @@
+1. login to https://rozetka.com.ua/ua/
+2. Press [data-testid="menu_button"] use
+3. Press use[rzIconName="icon-catalog"] Expected: window "Каталог товарів" is opened.
+4. Press ul.menu-main li:nth-child(2) button , press ul.menu-regular li.menu-regular__column:last-child li:nth-child(14)
+5. Press div.list a:nth-of-type(3). Expected: Акустика Hi-Fi is opened.
+6. Open Filter by pressing button[class="me-4 button button--navy button--medium button--with-icon setting-filter-button"]
+7. Press li[data-filter-name="producer"], select [data-id="Bang & Olufsen"]
+7. Press div[class="d-flex gap-4"] button:nth-of-type(2) Expected: All goods of Bang & Olufsen producer is shown
+8. add 2nd item to favorites by pressing div[class="item"]:nth-of-type(2) button[class="wishlist-button js-wish-button"]
+
+expected: button icon is changed to div[class="item"]:nth-of-type(2) button[class="wishlist-button"] use[rzIconName="icon-heart-filled"] 
