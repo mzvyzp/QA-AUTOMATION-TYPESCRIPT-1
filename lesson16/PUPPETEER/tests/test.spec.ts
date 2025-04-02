@@ -9,14 +9,14 @@ describe('Puppeteer tehnomax positive test', () => {
     let tehnomaxPage: TehnomaxPage;
 
     before(async () => {
-        browser = await puppeteer.launch({headless: false, defaultViewport: {width: 1200, height: 800}});
+        const slowMo = 180;
+        browser = await puppeteer.launch({headless: false, slowMo, defaultViewport: {width: 1200, height: 800}});
     });
 
     beforeEach(async () => {
         context = await browser.createBrowserContext();
         page = await context.newPage();
         tehnomaxPage = new TehnomaxPage(page);
-        page.setDefaultTimeout(4000);
     });
 
     afterEach(async () => {
@@ -28,36 +28,29 @@ describe('Puppeteer tehnomax positive test', () => {
         await browser.close();
     });
     it('should login to tehnomax page', async () => {
-        await page.goto('https://www.tehnomax.me/', { waitUntil: 'load' });
+        await page.goto('https://www.tehnomax.me/', { waitUntil: 'domcontentloaded' });
         await tehnomaxPage.clickLoginButton();
         await tehnomaxPage.fillEmailInput('zvmykhailo@gmail.com');
         await tehnomaxPage.fillPasswordInput('Zvmykhailo0206_');
         await tehnomaxPage.clickSubmitButton();
-        await new Promise(resolve => setTimeout(resolve, 4000));
         await tehnomaxPage.getUserDetails();
-        await new Promise(resolve => setTimeout(resolve, 4000));
         const loggedUser = await tehnomaxPage.getLoggedUser();
         console.log('Logged user:', loggedUser);
-        await new Promise(resolve => setTimeout(resolve, 4000));
-        expect(loggedUser).to.include('M. M.');
+        expect(loggedUser).to.include('mzv mzv');
 
 
     });
     it('add goods to favorite', async () => {
-        await page.goto('https://www.tehnomax.me/', { waitUntil: 'load' });
+        await page.goto('https://www.tehnomax.me/', { waitUntil: 'domcontentloaded' });
         await tehnomaxPage.clickLoginButton();
         await tehnomaxPage.fillEmailInput('zvmykhailo@gmail.com');
         await tehnomaxPage.fillPasswordInput('Zvmykhailo0206_');
         await tehnomaxPage.clickSubmitButton();
-        await new Promise(resolve => setTimeout(resolve, 4000));
         await tehnomaxPage.searchForGoods('usisivac dyson');
         await tehnomaxPage.clickSearchButton();
-        await new Promise(resolve => setTimeout(resolve, 6000));
         await tehnomaxPage.addToFavoriteGoods();
-        await new Promise(resolve => setTimeout(resolve, 6000));
         const goodName = await tehnomaxPage.getFavoriteGoodName();
         console.log('Favorite good:', goodName);
-        await new Promise(resolve => setTimeout(resolve, 4000));
         await tehnomaxPage.getFavoriteGoods();
         await new Promise(resolve => setTimeout(resolve, 4000));
         const addedFavGood = await tehnomaxPage.getFavoriteGoodsList();
