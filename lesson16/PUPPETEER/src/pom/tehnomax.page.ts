@@ -52,6 +52,15 @@ export class TehnomaxPage {
         return this.page.locator('div.product-name-grid');
     }
 
+    private get removeFromFavorite(): Locator<Element> {
+        return this.page.locator('i[class="remove-item js-remove-item"] path');
+    }
+
+    private get confirmRemoveFromFav(): Locator<Element> {
+        return this.page.locator('div[data-remodal-id="modal"] button.remodal-confirm');
+    }
+
+
     public constructor(private page: Page) {};
 
     public async goTo(): Promise<void> {
@@ -121,5 +130,19 @@ export class TehnomaxPage {
         return goodList;
     }
 
+    public async removeFromFavoriteGoods(): Promise<void> {
+        await this.removeFromFavorite.click();
+    }
+    public async confirmRemoveFromFavorite(): Promise<void> {
+        await this.confirmRemoveFromFav.click();
+    }
 
+    public async getEmptyFavList(): Promise<string | null> {
+        const element = await this.page.waitForSelector('div.empty-whish-list p:nth-child(1)'); // select the element
+        if (!element) {
+            throw new Error('Element not found: div.empty-whish-list p:nth-child(1)');
+        }
+        const emptyList = await element.evaluate(el => el.textContent);
+        return emptyList;
+    }
 }

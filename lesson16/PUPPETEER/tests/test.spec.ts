@@ -9,7 +9,7 @@ describe('Puppeteer tehnomax positive test', () => {
     let tehnomaxPage: TehnomaxPage;
 
     before(async () => {
-        const slowMo = 180;
+        const slowMo = 80;
         browser = await puppeteer.launch({headless: false, slowMo, defaultViewport: {width: 1200, height: 800}});
     });
 
@@ -55,7 +55,11 @@ describe('Puppeteer tehnomax positive test', () => {
         await new Promise(resolve => setTimeout(resolve, 4000));
         const addedFavGood = await tehnomaxPage.getFavoriteGoodsList();
         console.log('Added favorite good:', addedFavGood);
-        expect(addedFavGood).to.include(goodName);
+        expect(goodName).to.include(addedFavGood);
+        await tehnomaxPage.removeFromFavoriteGoods();
+        await tehnomaxPage.confirmRemoveFromFavorite();
+        const removedFavGood = await tehnomaxPage.getEmptyFavList();
+        expect(removedFavGood).to.include('Nemate proizvoda');
     }
     );
 });
