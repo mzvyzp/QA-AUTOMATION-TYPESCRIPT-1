@@ -1,4 +1,3 @@
-//import { xpath } from 'cypress-xpath';
 describe ('Login to tehnomax', () => {
     beforeEach(() => {
         cy.viewport(1280, 720);
@@ -7,10 +6,8 @@ describe ('Login to tehnomax', () => {
     );
     it('Login with valid credentials', () => {
         cy.get('div.user-wraper a').click();
-        cy.get('div.login-wrapper input[placeholder="Email adresa *"]').type('zvmykhailo@gmail.com');
-        cy.wait(4000);
-        cy.get('div.login-wrapper input[type="password"]').type('Zvmykhailo0206_');
-        cy.wait(4000);
+        cy.get('div.login-wrapper input[placeholder="Email adresa *"]', { timeout: 4000 }).type('zvmykhailo@gmail.com');
+        cy.get('div.login-wrapper input[type="password"]', { timeout: 4000 }).type('Zvmykhailo0206_');
         cy.get('div.login-wrapper input[value="PRIJAVITE SE"]').click();
         cy.wait(4000);
         cy.get('div.user-logged span').click();
@@ -18,10 +15,8 @@ describe ('Login to tehnomax', () => {
     });
     it('add goods to favorite', () => {
         cy.get('div.user-wraper a').click();
-        cy.get('div.login-wrapper input[placeholder="Email adresa *"]').type('zvmykhailo@gmail.com');
-        cy.wait(4000);
-        cy.get('div.login-wrapper input[type="password"]').type('Zvmykhailo0206_');
-        cy.wait(4000);
+        cy.get('div.login-wrapper input[placeholder="Email adresa *"]', { timeout: 4000 }).type('zvmykhailo@gmail.com');
+        cy.get('div.login-wrapper input[type="password"]', { timeout: 4000 }).type('Zvmykhailo0206_');
         cy.get('div.login-wrapper input[value="PRIJAVITE SE"]').click();
         cy.wait(4000);
         cy.get('[id="fnc-search_form"] input[type="text"]').type('usisivac dyson');
@@ -32,8 +27,12 @@ describe ('Login to tehnomax', () => {
         cy.get('div.js-product-grid-wrap div:nth-child(4) div.product-name-grid').invoke('text').then((text) => {
             const goodName = text.trim();
             cy.wait(2000);
-            cy.get('div[class="wish-list-wrap js-wish-list-wrap"] a img').click();
+            cy.get('div[class="wish-list-wrap js-wish-list-wrap"] a img', { timeout: 2000 }).click();
             cy.get('div.product-name-grid').should('contain', goodName);
+            cy.get('i[class="remove-item js-remove-item"] path').click();
+            cy.wait(2000);
+            cy.get('div[data-remodal-id="modal"] button.remodal-confirm').click();
         });
+        cy.get('div.empty-whish-list p:nth-child(1)').invoke('text').should('contain', 'Nemate proizvoda');
     });
 });
