@@ -60,6 +60,13 @@ export class TehnomaxPage {
         return this.page.locator('div[data-remodal-id="modal"] button.remodal-confirm');
     }
 
+    private get favProductDetails(): Locator<Element> {
+        return this.page.locator('a.product-link');
+    }
+
+    private get removeGoodfromfav(): Locator<Element> {
+        return this.page.locator('div[class="relativediscount-mobile-align web-view"] div[class="checked-wish checked_wish_new"]');
+    }
 
     public constructor(private page: Page) {};
 
@@ -132,6 +139,7 @@ export class TehnomaxPage {
 
     public async removeFromFavoriteGoods(): Promise<void> {
         await this.removeFromFavorite.click();
+        await this.confirmRemoveFromFav.wait();
     }
     public async confirmRemoveFromFavorite(): Promise<void> {
         await this.confirmRemoveFromFav.click();
@@ -144,5 +152,14 @@ export class TehnomaxPage {
         }
         const emptyList = await element.evaluate(el => el.textContent);
         return emptyList;
+    }
+
+    public async getFavProductDetails(): Promise<void> {
+        await this.favProductDetails.click();
+        await this.removeGoodfromfav.wait();
+    }
+
+    public async removeGoodFromFav(): Promise<void> {
+        await this.removeGoodfromfav.click();
     }
 }

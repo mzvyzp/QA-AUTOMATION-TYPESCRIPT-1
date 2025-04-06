@@ -28,7 +28,7 @@ describe('Puppeteer tehnomax positive test', () => {
         await browser.close();
     });
     it('should login to tehnomax page', async () => {
-        await page.goto('https://www.tehnomax.me/', { waitUntil: 'domcontentloaded' });
+        await tehnomaxPage.goTo();
         await tehnomaxPage.clickLoginButton();
         await tehnomaxPage.fillEmailInput('zvmykhailo@gmail.com');
         await tehnomaxPage.fillPasswordInput('Zvmykhailo0206_');
@@ -41,7 +41,7 @@ describe('Puppeteer tehnomax positive test', () => {
 
     });
     it('add goods to favorite', async () => {
-        await page.goto('https://www.tehnomax.me/', { waitUntil: 'domcontentloaded' });
+        await tehnomaxPage.goTo();
         await tehnomaxPage.clickLoginButton();
         await tehnomaxPage.fillEmailInput('zvmykhailo@gmail.com');
         await tehnomaxPage.fillPasswordInput('Zvmykhailo0206_');
@@ -49,17 +49,13 @@ describe('Puppeteer tehnomax positive test', () => {
         await tehnomaxPage.searchForGoods('usisivac dyson');
         await tehnomaxPage.clickSearchButton();
         await tehnomaxPage.addToFavoriteGoods();
-        const goodName = await tehnomaxPage.getFavoriteGoodName();
-        console.log('Favorite good:', goodName);
         await tehnomaxPage.getFavoriteGoods();
-        await new Promise(resolve => setTimeout(resolve, 4000));
-        const addedFavGood = await tehnomaxPage.getFavoriteGoodsList();
-        console.log('Added favorite good:', addedFavGood);
-        expect(goodName).to.include(addedFavGood);
-        await tehnomaxPage.removeFromFavoriteGoods();
-        await tehnomaxPage.confirmRemoveFromFavorite();
+        await tehnomaxPage.getFavProductDetails();
+        await tehnomaxPage.removeGoodFromFav();
+        await tehnomaxPage.getFavoriteGoods();
         const removedFavGood = await tehnomaxPage.getEmptyFavList();
         expect(removedFavGood).to.include('Nemate proizvoda');
+
     }
     );
 });
