@@ -29,9 +29,10 @@ describe ('Login to tehnomax', () => {
             cy.wait(2000);
             cy.get('div[class="wish-list-wrap js-wish-list-wrap"] a img', { timeout: 2000 }).click();
             cy.get('div.product-name-grid').should('contain', goodName);
-            cy.get('i[class="remove-item js-remove-item"] path').click();
-            cy.wait(2000);
-            cy.get('div[data-remodal-id="modal"] button.remodal-confirm').click();
+            cy.get('a.product-link').click();
+            cy.wait(4000);
+            cy.get('div[class="relativediscount-mobile-align web-view"] div[class="checked-wish checked_wish_new"]').click();
+            cy.get('div[class="wish-list-wrap js-wish-list-wrap"] a img', { timeout: 2000 }).click();
         });
         cy.get('div.empty-whish-list p:nth-child(1)').invoke('text').should('contain', 'Nemate proizvoda');
     });
