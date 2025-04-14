@@ -1,4 +1,3 @@
-//import Page from './page';
 import { $ } from '@wdio/globals';
 import { ChainablePromiseElement } from 'webdriverio';
 import { SearchPage } from './search-goods.page';

@@ -1,6 +1,11 @@
 import Page from './page';
+
+/**
+ * sub page containing specific selectors and methods for a specific page
+ */
 import { $, browser } from '@wdio/globals';
 import { ChainablePromiseElement } from 'webdriverio';
+//import * as fs from 'fs';
 
 export class LoginPage extends Page {
 
@@ -26,9 +31,16 @@ export class LoginPage extends Page {
 
     public userSelector = $('div.account-menu-wrap h1.heading a');
 
+    /*public async goto(): Promise<void> {
+        await this.open();
+        await this.loginButton.waitForStable();
+    }*/
+
     public async login(username: string, password: string): Promise<void> {
 
+
         await this.open();
+        //await browser.setTimeout({ implicit: 1000 });
         await this.loginButton.waitForDisplayed();
         await this.loginButton.waitForClickable();
         await this.loginButton.click();
@@ -44,3 +56,4 @@ export class LoginPage extends Page {
 
     }
 }
+
