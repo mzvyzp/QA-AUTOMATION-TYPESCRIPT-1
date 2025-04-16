@@ -19,6 +19,8 @@ beforeEach(async () => {
     loginPage = new LoginPage();
     favouritesPage = new FavouritesPage();
     searchPage = new SearchPage();
+    await page.open();
+    await loginPage.login('userMail', 'password');
 });
 afterEach(async () => {
     await browser.reloadSession();
@@ -26,14 +28,10 @@ afterEach(async () => {
 
 describe('tehnomax', () => {
     it('should login with valid credentials', async () => {
-        await page.open();
-        await loginPage.login('userMail', 'password');
         await expect(loginPage.userSelector).toHaveText(expect.stringContaining('mzv mzv'));
     });
 
     it('search goods and add to favorites', async () => {
-        await page.open();
-        await loginPage.login('userMail', 'password');
         await searchPage.searchForGoods('usisivac dyson');
         await favouritesPage.goToFavourites();
         await favouritesPage.deleteFromFavourites();
